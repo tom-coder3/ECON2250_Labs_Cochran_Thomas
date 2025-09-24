@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maghfira Ramadhani">
+
+<title>Lab 03: Descriptive Statistics and Visualization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="lab-03_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lab-03_files/libs/quarto-html/quarto.js"></script>
+<script src="lab-03_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-03_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lab-03_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lab-03_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-03_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lab-03_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lab-03_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lab-03_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="lab-03_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="lab-03_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lab-03.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 03: Descriptive Statistics and Visualization</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Maghfira Ramadhani </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Sep 24, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Due date
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This lab is due on <strong>Monday, September 29 at 11:59pm</strong>. To be considered on time, the following must be done by the due date:</p>
+<ul>
+<li>Final <code>.qmd</code> and <code>.pdf</code> files pushed to your GitHub repo</li>
+<li>Final <code>.pdf</code> file submitted on Gradescope</li>
+</ul>
+</div>
+</div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>The main goal is to practice version control using Github. Most of these labs is adopted from happygitwithr.com materials.</p>
+<section id="learning-goals" class="level2">
+<h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
+<p>By the end of the lab, you will:</p>
+<ol type="1">
+<li><p>Create GitHub repository from an R project</p></li>
+<li><p>Collaborate with teammates in a project via GitHub</p></li>
+<li><p>Produce descriptive statistics</p></li>
+<li><p>Produce data visualizations</p></li>
+</ol>
+</section>
+</section>
+<section id="setup-packages" class="level1">
+<h1>Setup Packages</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and install package</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  tidyverse,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  probstats4econ,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  kableExtra,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  RColorBrewer,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  curl,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  usethis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercise-1-creating-your-own-github-repository" class="level1">
+<h1>Exercise 1: Creating your Own GitHub Repository</h1>
+<p>Make sure you have already created your Labs R Project folder. The name of your folder should be <code>ECON2250_Labs_LastName_FirstName</code>. One way to check if you’re doing it correctly is if a files with <code>.Rproj</code> extension exists in your Files window in RStudio. If this is not yet done, you need to create this (follow steps explained in Lab 1).</p>
+<p>Now, we are going to our own GitHub repository from this existing R projects. Follow these steps:</p>
+<ol type="1">
+<li><p>Ask one of your classmates to be your partner. These labs session is a group work.</p></li>
+<li><p>Make sure you install all the packages listed above.</p></li>
+<li><p>Install git on you computer. And check if it shows up in Rstudio, if not go to <strong>Tools</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Version Control</strong> and select <strong>Git</strong>.</p></li>
+<li><p>Create your GitHub Token: </p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_github_token</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>Set your GitHub credentials </li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="6" type="1">
+<li>Create your GitHub repository </li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercise-2-collaborating-with-github" class="level1">
+<h1>Exercise 2: Collaborating with GitHub</h1>
+<p>Now, we are going to learn how to collaborate using GitHub. Follow these steps:</p>
+<ol type="1">
+<li><p>Go to your GitHub repo on GitHub.com, go to <em>Settings</em> <span class="math inline">\(\rightarrow\)</span> <em>Collaborators</em> <span class="math inline">\(\rightarrow\)</span> <em>Add people</em>, then look for your teammates GitHub profile. Each teammates must do this, so you both will be collaborators on each Labs repository.</p></li>
+<li><p>Now as a collaborators you can collaborate with your teammates repository, by cloning their repository. Go to their repository and copy the HTTPS url to clone their repository, this will looks like this:</p>
+<p><code>https://github.com/theirGitHubUserName/ECON2250_Labs_LastName_FirstName.git</code>.</p>
+<p>Then in RStudio, go to <em>File</em> <span class="math inline">\(\rightarrow\)</span> <em>New Project</em> <span class="math inline">\(\rightarrow\)</span> <em>Version Control</em> <span class="math inline">\(\rightarrow\)</span> <em>Git</em> and paste the Repository URL, and place it in a different folder than your original Rproject. Open the new R project in new window so that you keep your own project open.</p></li>
+<li><p>Now we can try several command in the Terminal: <code>git status</code>, <code>git commit</code>, <code>git push</code>, <code>git fetch</code>, and <code>git push</code>. See <a href="https://rviews.rstudio.com/2020/04/23/10-commands-to-get-started-with-git/">here</a> if you want to know more than this. Now, let’s try to type something below in your collaborators repository, then commmit, and push it. Check your repo as well.</p></li>
+</ol>
+<p>Type line below here:</p>
+<p><strong>To complete these exercise, you have to have at least one contributions from your teammates in your repository.</strong></p>
+</section>
+<section id="exercise-3-creating-descriptive-statistics" class="level1">
+<h1>Exercise 3: Creating Descriptive Statistics</h1>
+<section id="single-variable" class="level2">
+<h2 class="anchored" data-anchor-id="single-variable">Single Variable</h2>
+<p><em>A subsample of the 2019 Current Population Survey (CPS)</em> </p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cps<span class="sc">%&gt;%</span><span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 4,013
+Columns: 17
+$ statefips   &lt;fct&gt; CA, AK, MT, NY, SC, TN, AL, CO, MD, TX, TX, MA, AZ, IL, WY~
+$ age         &lt;int&gt; 50, 34, 50, 30, 40, 35, 56, 42, 55, 58, 39, 59, 39, 58, 34~
+$ hrslastwk   &lt;int&gt; 40, 40, NA, 44, NA, 30, 40, 25, 40, 46, 41, 44, 30, 8, 60,~
+$ unempwks    &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
+$ wagehr      &lt;dbl&gt; 12.00, NA, NA, NA, NA, NA, 25.00, 8.00, NA, NA, 22.78, 31.~
+$ earnwk      &lt;dbl&gt; 576.92, 3048.59, NA, 2500.00, NA, 300.00, 1000.00, 1000.00~
+$ ownchild    &lt;int&gt; 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0~
+$ educ        &lt;dbl&gt; 14.0, 18.0, 16.0, 18.0, 12.0, 12.0, 12.0, 7.5, 12.0, 13.0,~
+$ gender      &lt;fct&gt; Male, Female, Male, Female, Female, Male, Male, Female, Fe~
+$ metro       &lt;fct&gt; Metro, Metro, Metro, Metro, Metro, Metro, Metro, Metro, Me~
+$ race        &lt;fct&gt; Black, White, White, White, Black, White, White, Black, Ot~
+$ hispanic    &lt;fct&gt; Non-hispanic, Non-hispanic, Hispanic, Non-hispanic, Non-hi~
+$ marstatus   &lt;fct&gt; Never married, Married, Married, Never married, Never marr~
+$ lfstatus    &lt;fct&gt; Employed, Employed, Not in LF, Employed, Not in LF, Employ~
+$ ottipcomm   &lt;fct&gt; No, No, NA, No, NA, No, No, No, No, No, No, No, No, No, No~
+$ hourly      &lt;fct&gt; Hourly, Non-hourly, NA, Non-hourly, NA, Non-hourly, Hourly~
+$ unionstatus &lt;fct&gt; Non-union, Non-union, NA, Non-union, NA, Non-union, Non-un~</code></pre>
+</div>
+</div>
+<section id="categorical-data-example" class="level3">
+<h3 class="anchored" data-anchor-id="categorical-data-example">Categorical Data: Example</h3>
+<p><em>A subsample of the 2019 Current Population Survey (CPS)</em> </p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cps<span class="sc">$</span>lfstatus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Employed  Not in LF Unemployed 
+      2809       1098        106 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cps<span class="sc">$</span>lfstatus)<span class="sc">/</span><span class="fu">nrow</span>(cps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Employed  Not in LF Unemployed 
+0.69997508 0.27361077 0.02641415 </code></pre>
+</div>
+</div>
+<p><em>Table of sample count and sample proportion of 2019 CPS by labor force status</em> </p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>count_sum<span class="ot">&lt;-</span>cps<span class="sc">|&gt;</span><span class="fu">group_by</span>(lfstatus)<span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">'Sample Count'</span><span class="ot">=</span><span class="fu">n</span>(),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Sample Proportion (%)'</span><span class="ot">=</span><span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(cps),<span class="dv">2</span>))<span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">lfstatus=</span><span class="st">"Total"</span>, <span class="st">'Sample Count'</span><span class="ot">=</span><span class="fu">nrow</span>(cps), <span class="st">'Sample Proportion (%)'</span><span class="ot">=</span><span class="dv">100</span>)<span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">'Labor Force Status'</span><span class="ot">=</span>lfstatus)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(count_sum, <span class="at">booktabs =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Labor Force Status</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sample Count</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sample Proportion (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Employed</td>
+<td style="text-align: right;">2809</td>
+<td style="text-align: right;">70.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not in LF</td>
+<td style="text-align: right;">1098</td>
+<td style="text-align: right;">27.36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unemployed</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">2.64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">4013</td>
+<td style="text-align: right;">100.00</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p><em>Bar charts of sample count and sample proportion of 2019 CPS by labor-force status</em> </p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># barchartwithsamplecounts</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(cps<span class="sc">$</span>lfstatus), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3000</span>), <span class="at">main=</span><span class="st">"Bar chart (counts) of</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">labor-force status"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># barchartwithsampleproportions</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(cps<span class="sc">$</span>lfstatus)<span class="sc">/</span><span class="fu">nrow</span>(cps), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.8</span>), <span class="at">main=</span><span class="st">"Bar chart (proportions)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">of labor-force status"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/cps%20bar%20chart-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="numerical-data-example" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-data-example">Numerical Data: Example</h3>
+<p><em>Histogram of 2019 CPS age distribution</em> </p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/cps%20histogram-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><em>Histogram and density plot of 2019 CPS weekly earnings distribution of employed individuals</em> </p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/cps%20histogram%20and%20density-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sample-quantiles-example" class="level3">
+<h3 class="anchored" data-anchor-id="sample-quantiles-example">Sample quantiles: Example</h3>
+<p><em>Sample quantiles of 2019 CPS weekly earnings quantiles</em> </p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram with density</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(cpsemployed<span class="sc">$</span>earnwk, <span class="at">breaks=</span><span class="dv">92</span>, <span class="at">freq=</span><span class="cn">FALSE</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">""</span>, <span class="at">xlab=</span><span class="st">"Weekly earnings($)"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(cpsemployed<span class="sc">$</span>earnwk), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">1</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantiles</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>qs <span class="ot">&lt;-</span> <span class="fu">quantile</span>(cpsemployed<span class="sc">$</span>earnwk, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.25</span>, </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                                           <span class="fl">0.50</span>, <span class="fl">0.75</span>, <span class="fl">0.90</span>, <span class="fl">0.95</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Brewer palette with 7 distinct colors</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="at">n=</span><span class="dv">7</span>, <span class="at">name=</span><span class="st">"Set1"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Add vertical lines with colors</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(qs)) {</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v=</span>qs[i], <span class="at">col=</span>cols[i], <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Legend</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">names</span>(qs),</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span>cols, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">0.8</span>,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Quantiles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/cps%20sample%20quantiles-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="boxplot-example" class="level3">
+<h3 class="anchored" data-anchor-id="boxplot-example">Boxplot: Example</h3>
+<p><em>2019 CPS weekly earnings</em> </p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">pin=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># box plot with whiskers and outliers (the default in R)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(cpsemployed<span class="sc">$</span>earnwk, <span class="at">ylab=</span><span class="st">"Weekly earnings"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">main=</span><span class="st">"Box plot (whiskers and outliers)"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># box plot with whiskers at min and max values</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(cpsemployed<span class="sc">$</span>earnwk, <span class="at">range=</span><span class="dv">0</span>,<span class="at">ylab=</span><span class="st">"Weekly earnings"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">main=</span><span class="st">"Box plot (whiskers at min/max)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/cps%20boxplot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="descriptive-statistics-example" class="level3">
+<h3 class="anchored" data-anchor-id="descriptive-statistics-example">Descriptive statistics: Example</h3>
+<p><em>2019 CPS Union vs Non-union worker’s wage</em> </p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>union_summary<span class="ot">&lt;-</span>cpsemployed<span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(unionstatus)<span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(earnwk, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">MAD =</span> <span class="fu">round</span>(<span class="fu">mean</span>(<span class="fu">abs</span>(earnwk <span class="sc">-</span> <span class="fu">mean</span>(earnwk, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">variance =</span> <span class="fu">round</span>(<span class="fu">var</span>(earnwk, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>),   <span class="co"># uses n-1 in denominator</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">round</span>(<span class="fu">sd</span>(earnwk, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>union_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 x 6
+  unionstatus     n  mean   MAD variance    sd
+  &lt;fct&gt;       &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+1 Non-union    2533  946.  489.  562120.  750.
+2 Union         276 1198.  532.  518379.  720.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(union_summary, <span class="at">format=</span><span class="st">"latex"</span>, <span class="at">booktabs =</span> T, <span class="at">escape=</span>F,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">align=</span><span class="fu">c</span>(<span class="st">"l"</span>,<span class="st">"c"</span>,<span class="st">"c"</span>,<span class="st">"c"</span>,<span class="st">"c"</span>,<span class="st">"c"</span>),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Union vs non-union worker's wage (CPS, 2019)"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Union Status"</span>, <span class="st">"Sample Size ($n$)"</span>, <span class="st">"Mean ($</span><span class="sc">\\</span><span class="st">overline{x}$)"</span>, </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"MAD"</span>, <span class="st">"Variance ($s_x^2$)"</span>, <span class="st">"Std. Dev. ($s_x$)"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">"Here is a general notes for this table."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+</div>
+</div>
+<p><em>2019 CPS Male vs female worker’s wage</em> </p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>gender_summary<span class="ot">&lt;-</span>cpsemployed<span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender)<span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">round</span>(<span class="fu">mean</span>(earnwk, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">MAD =</span> <span class="fu">round</span>(<span class="fu">mean</span>(<span class="fu">abs</span>(earnwk <span class="sc">-</span> <span class="fu">mean</span>(earnwk, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">variance =</span> <span class="fu">round</span>(<span class="fu">var</span>(earnwk, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>),   <span class="co"># uses n-1 in denominator</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">round</span>(<span class="fu">sd</span>(earnwk, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),<span class="dv">2</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>gender_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 x 6
+  gender     n  mean   MAD variance    sd
+  &lt;fct&gt;  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+1 Female  1308  803.  415.  457066.  676.
+2 Male    1501 1117.  530.  610218.  781.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(gender_summary,<span class="at">format=</span><span class="st">"latex"</span>, <span class="at">booktabs =</span> T, <span class="at">escape=</span>F,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">align=</span><span class="fu">c</span>(<span class="st">"l"</span>,<span class="st">"c"</span>,<span class="st">"c"</span>,<span class="st">"c"</span>,<span class="st">"c"</span>,<span class="st">"c"</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Male vs female worker's wage (CPS, 2019)"</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Gender"</span>, <span class="st">"Sample Size ($n$)"</span>, <span class="st">"Mean ($</span><span class="sc">\\</span><span class="st">overline{x}$)"</span>, </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"MAD"</span>, <span class="st">"Variance ($s_x^2$)"</span>, <span class="st">"Std. Dev. ($s_x$)"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+</div>
+</div>
+</section>
+</section>
+<section id="multiple-variable" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-variable">Multiple variable</h2>
+<section id="joint-sample-counts-or-proportion-example" class="level3">
+<h3 class="anchored" data-anchor-id="joint-sample-counts-or-proportion-example">Joint sample counts or proportion: Example</h3>
+<p><strong>Joint sample count for labor-force status and race</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>joint_count<span class="ot">&lt;-</span><span class="fu">addmargins</span>(<span class="fu">table</span>(cps<span class="sc">$</span>lfstatus, cps<span class="sc">$</span>race))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(joint_count, <span class="at">booktabs =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Black</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Other</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">White</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Employed</td>
+<td style="text-align: right;">324</td>
+<td style="text-align: right;">241</td>
+<td style="text-align: right;">2244</td>
+<td style="text-align: right;">2809</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not in LF</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">863</td>
+<td style="text-align: right;">1098</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unemployed</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">106</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sum</td>
+<td style="text-align: right;">476</td>
+<td style="text-align: right;">349</td>
+<td style="text-align: right;">3188</td>
+<td style="text-align: right;">4013</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p><strong>Joint sample proportion for labor-force status and race</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>joint_proportion<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="fu">addmargins</span>(<span class="fu">table</span>(cps<span class="sc">$</span>lfstatus, cps<span class="sc">$</span>race))<span class="sc">/</span><span class="fu">nrow</span>(cps),<span class="dv">3</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(joint_proportion, <span class="at">booktabs =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Black</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Other</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">White</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Employed</td>
+<td style="text-align: right;">0.081</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: right;">0.559</td>
+<td style="text-align: right;">0.700</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not in LF</td>
+<td style="text-align: right;">0.034</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">0.274</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unemployed</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">0.026</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sum</td>
+<td style="text-align: right;">0.119</td>
+<td style="text-align: right;">0.087</td>
+<td style="text-align: right;">0.794</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p><strong>Sample proportions of labor-force status conditional on race</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>joint_proportion_race<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(cps<span class="sc">$</span>lfstatus, cps<span class="sc">$</span>race),<span class="at">margin=</span><span class="dv">2</span>),<span class="dv">3</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(joint_proportion_race, <span class="at">booktabs =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Black</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Other</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">White</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Employed</td>
+<td style="text-align: right;">0.681</td>
+<td style="text-align: right;">0.691</td>
+<td style="text-align: right;">0.704</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not in LF</td>
+<td style="text-align: right;">0.286</td>
+<td style="text-align: right;">0.284</td>
+<td style="text-align: right;">0.271</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unemployed</td>
+<td style="text-align: right;">0.034</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.025</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p><strong>Sample proportions of race conditional on labor-force status</strong> <!-- <div class=small-code> --></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>joint_proportion_lfstatus<span class="ot">&lt;-</span><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(cps<span class="sc">$</span>lfstatus, cps<span class="sc">$</span>race),<span class="at">margin=</span><span class="dv">1</span>),<span class="dv">3</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(joint_proportion_lfstatus, <span class="at">booktabs =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Black</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Other</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">White</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Employed</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.086</td>
+<td style="text-align: right;">0.799</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not in LF</td>
+<td style="text-align: right;">0.124</td>
+<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">0.786</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unemployed</td>
+<td style="text-align: right;">0.151</td>
+<td style="text-align: right;">0.085</td>
+<td style="text-align: right;">0.764</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="bar-charts-example" class="level3">
+<h3 class="anchored" data-anchor-id="bar-charts-example">Bar charts: Example</h3>
+<p><strong>Labor-force status proportions by race</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create sample count table for race and labor-force status variables</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>tbl_racelf <span class="ot">&lt;-</span> <span class="fu">table</span>(cps<span class="sc">$</span>race, cps<span class="sc">$</span>lfstatus)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># barplot command --- categories on x-axis are based upon columns (lfstatus) of the table</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">prop.table</span>(tbl_racelf, <span class="at">margin=</span><span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.8</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"gray30"</span>,<span class="st">"gray50"</span>, <span class="st">"gray70"</span>),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="at">legend.text=</span><span class="fu">rownames</span>(tbl_racelf), <span class="at">beside=</span><span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/cps%20bar%20chart%20by%20race-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Race proportions by labor-force status* {.smaller auto-animate=“true”}</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create sample count table table for race and labor-force status variables</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>tbl_lfrace <span class="ot">&lt;-</span> <span class="fu">table</span>(cps<span class="sc">$</span>lfstatus, cps<span class="sc">$</span>race)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># barplot command --- categories on x-axis are based upon columns (race) of the table</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">prop.table</span>(tbl_lfrace, <span class="at">margin=</span><span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.8</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"gray30"</span>,<span class="st">"gray50"</span>, <span class="st">"gray70"</span>),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="at">legend.text=</span><span class="fu">rownames</span>(tbl_lfrace), <span class="at">beside=</span><span class="cn">TRUE</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="at">args.legend =</span> <span class="fu">list</span>(<span class="at">x=</span><span class="st">"topleft"</span>,<span class="at">inset=</span><span class="fl">0.01</span>), <span class="at">main=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/cps%20bar%20chart%20by%20lfstatus-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="showing-distribution-for-different-category-example" class="level3">
+<h3 class="anchored" data-anchor-id="showing-distribution-for-different-category-example">Showing distribution for different category: Example</h3>
+<p><strong>Box plots of weekly earnings by race</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(cps<span class="sc">$</span>earnwk<span class="sc">~</span>cps<span class="sc">$</span>race, <span class="at">ylab=</span><span class="st">"Weekly earnings ($)"</span>, <span class="at">xlab=</span><span class="st">"Race"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/box%20plot%20earnings%20race-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Density of weakly earnings by race</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># createweeklyearningsvectorsforthethreesubsamples,byrace</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>earnwk_black <span class="ot">&lt;-</span>cpsemployed[cpsemployed<span class="sc">$</span>race<span class="sc">==</span><span class="st">"Black"</span>,<span class="st">"earnwk"</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>earnwk_other <span class="ot">&lt;-</span>cpsemployed[cpsemployed<span class="sc">$</span>race<span class="sc">==</span><span class="st">"Other"</span>,<span class="st">"earnwk"</span>]</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>earnwk_white <span class="ot">&lt;-</span>cpsemployed[cpsemployed<span class="sc">$</span>race<span class="sc">==</span><span class="st">"White"</span>,<span class="st">"earnwk"</span>]</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># firstplotthedensityofweeklyearningsforblackindividuals</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(earnwk_black), <span class="at">main=</span><span class="st">""</span>,<span class="at">xlab=</span><span class="st">"Weekly earnings($)"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># overlaythedensityofweeklyearningsforother-raceindividuals</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(earnwk_other), <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># overlaythedensityofweeklyearningsforwhiteindividuals</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(earnwk_white), <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co"># drawthelegend</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Black"</span>,<span class="st">"Other"</span>,<span class="st">"White"</span>), <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>), <span class="at">inset=</span><span class="fl">0.01</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/density%20earnings%20race-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="scatterplot-example" class="level3">
+<h3 class="anchored" data-anchor-id="scatterplot-example">Scatterplot: Example</h3>
+<p><strong>Weekly earnings versus years of education</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># scatterplotofweeklyearningsversusyearsofeducation</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cps<span class="sc">$</span>educ, cps<span class="sc">$</span>earnwk,<span class="at">xlab=</span><span class="st">"Education"</span>,<span class="at">ylab=</span><span class="st">"Weekly earnings($)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/scatter%20earnings%20years-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="expanded-scatterplot-example" class="level3">
+<h3 class="anchored" data-anchor-id="expanded-scatterplot-example">Expanded scatterplot: Example</h3>
+<p><strong>Weekly earnings vs years of education vs weekly hours worked</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># expandedscatterplot,withweeklyearnings,yearsofeducation,andweeklyhoursworked</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cps[,<span class="fu">c</span>(<span class="st">"educ"</span>,<span class="st">"earnwk"</span>,<span class="st">"hrslastwk"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_files/figure-html/expanded%20scatter-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="exercise-4-performing-better-data-visualization" class="level1">
+<h1>Exercise 4: Performing better data visualization</h1>
+<p>There is website that host a collection of beautiful charts you might want to visit: <code>https://r-graph-gallery.com/</code>. This exercise will require you to use the <code>cps</code> data we used above or other datasets from the textbooks package (see at <code>https://probstats4econ.com/datasets.html</code>), then produce the data visualization by replicating the code you find in the websites. Choose two graph that you really like and try to replicate it in the following code chunks. Remember to install the packages needed to produce the graph by putting the package name in the <code>package manager</code> chunk.</p>
+<p><em>Visualization replication 1</em> </p>
+<p><em>Visualization replication 2</em> </p>
+</section>
+<section id="wrapping-up" class="level1">
+<h1>Wrapping up</h1>
+<div class="render-commit-push">
+<p><strong>Team Member 1</strong>: Render the document and confirm that the changes are visible in the PDF. Then, commit (with an informative commit message) both the .qmd and PDF documents, and finally push the changes to GitHub. Make sure to commit and push all changed files so that your Git pane is empty afterwards.</p>
+</div>
+<div class="pull">
+<p><strong>All other team members</strong>: Once Team Member 2 is done rendering, committing, and pushing, confirm that the changes are visible on GitHub in your team’s lab repo. Then, in RStudio, click the Pull button in the Git pane to get the updated document. You should see the final version of your .qmd file.</p>
+</div>
+</section>
+<section id="submission" class="level1">
+<h1>Submission</h1>
+<p>You will submit the PDF documents for labs in to Gradescope as part of your final submission.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before you wrap up the assignment, make sure all documents are updated on your GitHub repo. We will be checking these to make sure you have been practicing how to commit and push changes.</p>
+<p>Remember – you must turn in a PDF file to the Gradescope page before the submission deadline for full credit.</p>
+</div>
+</div>
+<p>To submit your assignment:</p>
+<ul>
+<li><p>Access Gradescope</p></li>
+<li><p>Click on the assignment, and you’ll be prompted to submit it.</p></li>
+<li><p>Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).</p></li>
+<li><p>Select the first page of your .PDF submission to be associated with the <em>“Workflow &amp; formatting”</em> section.</p></li>
+</ul>
+</section>
+<section id="grading" class="level1">
+<h1>Grading</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 89%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Exercise 1</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise 2</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exercise 3</td>
+<td style="text-align: left;">80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise 4</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Workflow &amp; formatting (Pushing to GitHub and Submit to Gradescope)</td>
+<td style="text-align: left;">5</td>
+</tr>
+</tbody>
+</table>
+<p>The “Workflow &amp; formatting” grade is to assess the reproducible workflow and collaboration. This includes having at least one meaningful commit from each team member and updating the team name and date in the YAML.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maghfira Ramadhani">
+
+<title>Lab 02: Data and Reproducibility</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="lab-02_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lab-02_files/libs/quarto-html/quarto.js"></script>
+<script src="lab-02_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-02_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lab-02_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lab-02_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-02_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lab-02_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lab-02_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lab-02_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lab-02.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 02: Data and Reproducibility</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Maghfira Ramadhani </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Due date
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This lab is due on <strong>Monday, September 22 at 11:59pm</strong>. To be considered on time, the following must be done by the due date:</p>
+<ul>
+<li>Final <code>.pdf</code> file submitted on Gradescope</li>
+</ul>
+</div>
+</div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>The main goal is to learn data processsing using tidyverse and introduce you to version control using Github.</p>
+<section id="learning-goals" class="level2">
+<h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
+<p>By the end of the lab, you will learn:</p>
+<ol type="1">
+<li><p><a href="#basics">Tidyverse basics</a></p></li>
+<li><p><a href="#dplyr">Data wrangling with dplyr</a></p></li>
+<li><p><a href="#tidyr">Data tidying with tidyr</a></p></li>
+</ol>
+</section>
+</section>
+<section id="the-tidyverse" class="level1">
+<h1>The tidyverse</h1>
+<p><strong>A whole “universe” of functions within R</strong></p>
+<ul>
+<li>The most powerful, intuitive, and popular approach to data cleaning, wrangling, and visualization in R</li>
+</ul>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Consistent philosophy and syntax</li>
+<li>“Verb” based approach makes it more familiar to users of Stata/SAS/SPSS</li>
+<li>Serves as the front-end for many other big data and ML tools</li>
+</ul>
+<section id="tidying-data" class="level2">
+<h2 class="anchored" data-anchor-id="tidying-data">Tidying Data</h2>
+<p>The two most important properties of tidy data are:</p>
+<ol type="1">
+<li>Each column is a unique variable.</li>
+<li>Each row is a single observation.</li>
+</ol>
+<p><img src="images/tidy-1.png" class="img-fluid"></p>
+<div class="smaller">
+<p>[Image is from <a href="https://r4ds.had.co.nz/tidy-data.html">“R for Data Science”</a> by Hadley Wickham &amp; Garrett Grolemund, used under <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/us/">CC BY-NC-ND 3.0</a>]</p>
+</div>
+<p>Tidy data is easier to work with, because you have a consistent way of referring to variables and observations. It then becomes easy to manipulate, visualize, and model.</p>
+</section>
+<section id="wide-vs.-long-formats" class="level2">
+<h2 class="anchored" data-anchor-id="wide-vs.-long-formats">Wide vs.&nbsp;Long Formats</h2>
+<p>Both of these data sets display information on heart rate observed in individuals across 3 different time periods:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     name time1 time2 time3
+1  Wilbur    67    56    70
+2 Petunia    80    90    67
+3 Gregory    64    50   101</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     name time heartrate
+1  Wilbur    1        67
+2 Petunia    1        80
+3 Gregory    1        64
+4  Wilbur    2        56
+5 Petunia    2        90
+6 Gregory    2        50
+7  Wilbur    3        70
+8 Petunia    3        67
+9 Gregory    3        10</code></pre>
+</div>
+</div>
+<p>Which dataframe is in <em>tidy</em> format?</p>
+<p><strong>Wide</strong> data:</p>
+<ul>
+<li>Row = patient. Columns = repeated observations over time.</li>
+<li>Often easier to take in at a glance (as in a spreadsheet).</li>
+</ul>
+<p><strong>Long</strong> data:</p>
+<ul>
+<li>Row = one observation. Columns = ID variables + observed variable.</li>
+<li>Usually easier to clean, merge with other data, and avoid errors.</li>
+</ul>
+<p>Tidy data is more likely to be <strong>long</strong>.</p>
+<ul>
+<li>Most R packages have been written assuming your data is in long format.</li>
+</ul>
+<p>“Tidy datasets are all alike but every messy dataset is messy in its own way.”<br>
+– Hadley Wickham</p>
+</section>
+<section id="tidyverse-packages" class="level2">
+<h2 class="anchored" data-anchor-id="tidyverse-packages">Tidyverse packages</h2>
+<p>We need to install and load a couple of packages. Run these preliminaries:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and install package if necessary</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  tidyverse,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  nycflights13</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We see that we have actually loaded a number of packages (which could also be loaded individually): <strong>ggplot2</strong>, <strong>tibble</strong>, <strong>dplyr</strong>, etc. - We can also see information about the package versions and some <a href="https://raw.githack.com/uo-ec607/lectures/master/04-rlang/04-rlang.html#59">namespace conflicts</a>.</p>
+<p>The tidyverse actually comes with a lot more packages than those that are just loaded automatically.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidyverse_packages</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "broom"         "conflicted"    "cli"           "dbplyr"       
+ [5] "dplyr"         "dtplyr"        "forcats"       "ggplot2"      
+ [9] "googledrive"   "googlesheets4" "haven"         "hms"          
+[13] "httr"          "jsonlite"      "lubridate"     "magrittr"     
+[17] "modelr"        "pillar"        "purrr"         "ragg"         
+[21] "readr"         "readxl"        "reprex"        "rlang"        
+[25] "rstudioapi"    "rvest"         "stringr"       "tibble"       
+[29] "tidyr"         "xml2"          "tidyverse"    </code></pre>
+</div>
+</div>
+<p>All of these are super useful</p>
+<ul>
+<li><strong>lubridate</strong> helps us work with dates</li>
+<li><strong>rvest</strong> is for webscraping</li>
+</ul>
+<p>This labs will focus on two that are automatically loaded: <strong>dplyr</strong> and <strong>tidyr</strong>.</p>
+<section id="pipes-or" class="level3">
+<h3 class="anchored" data-anchor-id="pipes-or">Pipes: |&gt; or %&gt;%</h3>
+<p>Pipes take the <strong>output</strong> of one function and feed it into the <strong>first argument</strong> of the next (which you then skip).</p>
+<p><code>dataframe |&gt; filter(condition)</code> is equivalent to <code>filter(dataframe, condition)</code>.</p>
+<p>Note: <code>|&gt;</code> on these slides is generated by the two characters <code>| &gt;</code>, without the space.</p>
+<p><br> <strong>Older version</strong> of the pipe: <code>%&gt;%</code> * From the <code>magrittr</code> package loaded with the tidyverse * Works identically to <code>|&gt;</code> in most situations.</p>
+<p><br> <strong>Keyboard shortcut:</strong> Ctl/Cmd + Shift + M</p>
+<ul>
+<li>Have to turn on a setting in RStudio options to make <code>|&gt;</code> the default</li>
+</ul>
+<p>Pipes can dramatically improve the experience of reading and writing code. Compare:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## These next two lines of code do exactly the same thing.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">|&gt;</span> <span class="fu">filter</span>(manufacturer<span class="sc">==</span><span class="st">"audi"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">hwy_mean =</span> <span class="fu">mean</span>(hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 x 2
+  model      hwy_mean
+  &lt;chr&gt;         &lt;dbl&gt;
+1 a4             28.3
+2 a4 quattro     25.8
+3 a6 quattro     24  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="fu">group_by</span>(<span class="fu">filter</span>(mpg, manufacturer<span class="sc">==</span><span class="st">"audi"</span>), model), <span class="at">hwy_mean =</span> <span class="fu">mean</span>(hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 x 2
+  model      hwy_mean
+  &lt;chr&gt;         &lt;dbl&gt;
+1 a4             28.3
+2 a4 quattro     25.8
+3 a6 quattro     24  </code></pre>
+</div>
+</div>
+<p>The first line reads from left to right, exactly how you think about the operations.</p>
+<p>The second line totally inverts this logical order (the final operation comes first!)</p>
+<p>Best practice is to put each function on its own line and indent. Look how much more readable this is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(manufacturer <span class="sc">==</span> <span class="st">"audi"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(model) <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">hwy_mean =</span> <span class="fu">mean</span>(hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 x 2
+  model      hwy_mean
+  &lt;chr&gt;         &lt;dbl&gt;
+1 a4             28.3
+2 a4 quattro     25.8
+3 a6 quattro     24  </code></pre>
+</div>
+</div>
+<p>Vertical space costs nothing and makes for much more readable/writable code than cramming things horizontally.</p>
+<p>All together, this multi-line line of code is called a <strong>pipeline</strong>.</p>
+</section>
+<section id="key-dplyr-verbs" class="level3">
+<h3 class="anchored" data-anchor-id="key-dplyr-verbs">Key dplyr verbs</h3>
+<p><strong>There are five key dplyr verbs that you need to learn.</strong></p>
+<ol type="1">
+<li><p><code>filter</code>: Filter (i.e.&nbsp;subset) rows based on their values.</p></li>
+<li><p><code>arrange</code>: Arrange (i.e.&nbsp;reorder) rows based on their values.</p></li>
+<li><p><code>select</code>: Select (i.e.&nbsp;subset) columns by their names:</p></li>
+<li><p><code>mutate</code>: Create new columns.</p></li>
+<li><p><code>summarize</code>: Collapse multiple rows into a single summary value.</p></li>
+</ol>
+<p>Let’s practice these functions together using the <code>starwars</code> data frame that comes pre-packaged with dplyr.</p>
+</section>
+</section>
+</section>
+<section id="exercise-1-dplyrfilter" class="level1">
+<h1>Exercise 1: dplyr::filter</h1>
+<p><img src="images/filter.png" class="img-fluid"></p>
+<p>We can chain multiple filter commands with the pipe (<code>|&gt;</code>), or just separate them within a single filter command using commas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    species <span class="sc">==</span> <span class="st">"Human"</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    height <span class="sc">&gt;=</span> <span class="dv">190</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 x 14
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Darth Va~    202   136 none       white      yellow          41.9 male  mascu~
+2 Qui-Gon ~    193    89 brown      fair       blue            92   male  mascu~
+3 Dooku        193    80 white      fair       brown          102   male  mascu~
+4 Bail Pre~    191    NA black      tan        brown           67   male  mascu~
+# i 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+</div>
+<p>Regular expressions work well too.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(name, <span class="st">"Skywalker"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 x 14
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Luke Sky~    172    77 blond      fair       blue            19   male  mascu~
+2 Anakin S~    188    84 blond      fair       blue            41.9 male  mascu~
+3 Shmi Sky~    163    NA black      fair       brown           72   fema~ femin~
+# i 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+</div>
+<p>A very common <code>filter</code> use case is identifying (or removing) missing data cases.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 14
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Arvel Cr~     NA    NA brown      fair       brown             NA male  mascu~
+2 Finn          NA    NA black      dark       dark              NA male  mascu~
+3 Rey           NA    NA brown      light      hazel             NA fema~ femin~
+4 Poe Dame~     NA    NA brown      light      brown             NA male  mascu~
+5 BB8           NA    NA none       none       black             NA none  mascu~
+6 Captain ~     NA    NA none       none       unknown           NA fema~ femin~
+# i 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+</div>
+<p>To remove missing observations, simply use negation: <code>filter(!is.na(height))</code>.<br>
+Try this yourself.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>clean_starwars<span class="ot">&lt;-</span>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(height))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>clean_starwars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 14
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 Arvel Cr~     NA    NA brown      fair       brown             NA male  mascu~
+2 Finn          NA    NA black      dark       dark              NA male  mascu~
+3 Rey           NA    NA brown      light      hazel             NA fema~ femin~
+4 Poe Dame~     NA    NA brown      light      brown             NA male  mascu~
+5 BB8           NA    NA none       none       black             NA none  mascu~
+6 Captain ~     NA    NA none       none       unknown           NA fema~ femin~
+# i 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-2-dplyrarrange" class="level1">
+<h1>Exercise 2: dplyr::arrange</h1>
+<p><img src="images/arrange.png" class="img-fluid"></p>
+<p><code>arrange</code> sorts your data frame by a particular column (numerically, or alphabetically)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(birth_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 x 14
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Wicket ~     88  20   brown      brown      brown            8   male  mascu~
+ 2 IG-88       200 140   none       metal      red             15   none  mascu~
+ 3 Luke Sk~    172  77   blond      fair       blue            19   male  mascu~
+ 4 Leia Or~    150  49   brown      light      brown           19   fema~ femin~
+ 5 Wedge A~    170  77   brown      fair       hazel           21   male  mascu~
+ 6 Plo Koon    188  80   none       orange     black           22   male  mascu~
+ 7 Biggs D~    183  84   black      light      brown           24   male  mascu~
+ 8 Han Solo    180  80   brown      fair       brown           29   male  mascu~
+ 9 Lando C~    177  79   black      dark       brown           31   male  mascu~
+10 Boba Fe~    183  78.2 black      fair       brown           31.5 male  mascu~
+# i 77 more rows
+# i 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+</div>
+<p>We can also arrange items in descending order using <code>arrange(desc())</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(birth_year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 x 14
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Yoda         66    17 white      green      brown            896 male  mascu~
+ 2 Jabba D~    175  1358 &lt;NA&gt;       green-tan~ orange           600 herm~ mascu~
+ 3 Chewbac~    228   112 brown      unknown    blue             200 male  mascu~
+ 4 C-3PO       167    75 &lt;NA&gt;       gold       yellow           112 none  mascu~
+ 5 Dooku       193    80 white      fair       brown            102 male  mascu~
+ 6 Qui-Gon~    193    89 brown      fair       blue              92 male  mascu~
+ 7 Ki-Adi-~    198    82 white      pale       yellow            92 male  mascu~
+ 8 Finis V~    170    NA blond      fair       blue              91 male  mascu~
+ 9 Palpati~    170    75 grey       pale       yellow            82 male  mascu~
+10 Cliegg ~    183    NA brown      fair       blue              82 male  mascu~
+# i 77 more rows
+# i 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-3-dplyrselect" class="level1">
+<h1>Exercise 3: dplyr::select</h1>
+<p><img src="images/select.png" class="img-fluid"></p>
+<p>Use commas to select multiple columns out of a data frame. (You can also use “first:last” for consecutive columns). Deselect a column with “-”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name<span class="sc">:</span>skin_color, species, <span class="sc">-</span>height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 x 5
+   name                mass hair_color    skin_color  species
+   &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;  
+ 1 Luke Skywalker        77 blond         fair        Human  
+ 2 C-3PO                 75 &lt;NA&gt;          gold        Droid  
+ 3 R2-D2                 32 &lt;NA&gt;          white, blue Droid  
+ 4 Darth Vader          136 none          white       Human  
+ 5 Leia Organa           49 brown         light       Human  
+ 6 Owen Lars            120 brown, grey   light       Human  
+ 7 Beru Whitesun Lars    75 brown         light       Human  
+ 8 R5-D4                 32 &lt;NA&gt;          white, red  Droid  
+ 9 Biggs Darklighter     84 black         light       Human  
+10 Obi-Wan Kenobi        77 auburn, white fair        Human  
+# i 77 more rows</code></pre>
+</div>
+</div>
+<p>You can also rename some (or all) of your selected variables in place.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">alias=</span>name, <span class="at">planet=</span>homeworld) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 x 2
+   alias              planet  
+   &lt;chr&gt;              &lt;chr&gt;   
+ 1 Luke Skywalker     Tatooine
+ 2 C-3PO              Tatooine
+ 3 R2-D2              Naboo   
+ 4 Darth Vader        Tatooine
+ 5 Leia Organa        Alderaan
+ 6 Owen Lars          Tatooine
+ 7 Beru Whitesun Lars Tatooine
+ 8 R5-D4              Tatooine
+ 9 Biggs Darklighter  Tatooine
+10 Obi-Wan Kenobi     Stewjon 
+# i 77 more rows</code></pre>
+</div>
+</div>
+<p>If you just want to rename columns without subsetting them, you can use <code>rename</code>. Try this!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>starwars_rename<span class="ot">&lt;-</span>starwars <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">alias=</span>name) </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(starwars_rename)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "alias"      "height"     "mass"       "hair_color" "skin_color"
+ [6] "eye_color"  "birth_year" "sex"        "gender"     "homeworld" 
+[11] "species"    "films"      "vehicles"   "starships" </code></pre>
+</div>
+</div>
+<p>The <code>select(contains(PATTERN))</code> option provides a nice shortcut in relevant cases.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, <span class="fu">contains</span>(<span class="st">"color"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 x 4
+   name               hair_color    skin_color  eye_color
+   &lt;chr&gt;              &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;    
+ 1 Luke Skywalker     blond         fair        blue     
+ 2 C-3PO              &lt;NA&gt;          gold        yellow   
+ 3 R2-D2              &lt;NA&gt;          white, blue red      
+ 4 Darth Vader        none          white       yellow   
+ 5 Leia Organa        brown         light       brown    
+ 6 Owen Lars          brown, grey   light       blue     
+ 7 Beru Whitesun Lars brown         light       blue     
+ 8 R5-D4              &lt;NA&gt;          white, red  red      
+ 9 Biggs Darklighter  black         light       brown    
+10 Obi-Wan Kenobi     auburn, white fair        blue-gray
+# i 77 more rows</code></pre>
+</div>
+</div>
+<p>Some other selection helpers: <code>starts_with()</code>, <code>ends_with()</code>, <code>all_of(c("name1", "name2"))</code>, <code>matches()</code>.</p>
+<hr>
+</section>
+<section id="exercise-4-dplyrmutate" class="level1">
+<h1>Exercise 4: dplyr::mutate</h1>
+<p><img src="images/mutate.png" class="img-fluid"></p>
+<p>You can create new columns from scratch, or (more commonly) as transformations of existing columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, birth_year) <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dog_years =</span> birth_year <span class="sc">*</span> <span class="dv">7</span>) <span class="sc">|&gt;</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comment =</span> <span class="fu">paste0</span>(name, <span class="st">" is "</span>, dog_years, <span class="st">" in dog years."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 x 4
+   name               birth_year dog_years comment                              
+   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                                
+ 1 Luke Skywalker           19        133  Luke Skywalker is 133 in dog years.  
+ 2 C-3PO                   112        784  C-3PO is 784 in dog years.           
+ 3 R2-D2                    33        231  R2-D2 is 231 in dog years.           
+ 4 Darth Vader              41.9      293. Darth Vader is 293.3 in dog years.   
+ 5 Leia Organa              19        133  Leia Organa is 133 in dog years.     
+ 6 Owen Lars                52        364  Owen Lars is 364 in dog years.       
+ 7 Beru Whitesun Lars       47        329  Beru Whitesun Lars is 329 in dog yea~
+ 8 R5-D4                    NA         NA  R5-D4 is NA in dog years.            
+ 9 Biggs Darklighter        24        168  Biggs Darklighter is 168 in dog year~
+10 Obi-Wan Kenobi           57        399  Obi-Wan Kenobi is 399 in dog years.  
+# i 77 more rows</code></pre>
+</div>
+</div>
+<p><em>Note:</em> <code>mutate</code> is order aware. So you can chain multiple mutates in a single call.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, birth_year) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dog_years =</span> birth_year <span class="sc">*</span> <span class="dv">7</span>,     <span class="co"># Separate with a comma</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">comment =</span> <span class="fu">paste0</span>(name, <span class="st">" is "</span>, dog_years, <span class="st">" in dog years."</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 x 4
+   name               birth_year dog_years comment                              
+   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                                
+ 1 Luke Skywalker           19        133  Luke Skywalker is 133 in dog years.  
+ 2 C-3PO                   112        784  C-3PO is 784 in dog years.           
+ 3 R2-D2                    33        231  R2-D2 is 231 in dog years.           
+ 4 Darth Vader              41.9      293. Darth Vader is 293.3 in dog years.   
+ 5 Leia Organa              19        133  Leia Organa is 133 in dog years.     
+ 6 Owen Lars                52        364  Owen Lars is 364 in dog years.       
+ 7 Beru Whitesun Lars       47        329  Beru Whitesun Lars is 329 in dog yea~
+ 8 R5-D4                    NA         NA  R5-D4 is NA in dog years.            
+ 9 Biggs Darklighter        24        168  Biggs Darklighter is 168 in dog year~
+10 Obi-Wan Kenobi           57        399  Obi-Wan Kenobi is 399 in dog years.  
+# i 77 more rows</code></pre>
+</div>
+</div>
+<p>Boolean, logical and conditional operators all work well with <code>mutate</code> too.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, height) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Luke Skywalker"</span>, <span class="st">"Anakin Skywalker"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tall1 =</span> height <span class="sc">&gt;</span> <span class="dv">180</span>) <span class="sc">|&gt;</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tall2 =</span> <span class="fu">if_else</span>(height <span class="sc">&gt;</span> <span class="dv">180</span>, <span class="st">"Tall"</span>, <span class="st">"Short"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 x 4
+  name             height tall1 tall2
+  &lt;chr&gt;             &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;
+1 Luke Skywalker      172 FALSE Short
+2 Anakin Skywalker    188 TRUE  Tall </code></pre>
+</div>
+</div>
+<p>Lastly, combining <code>mutate</code> with <code>across</code> allows you to easily perform the same operation on a subset of variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name<span class="sc">:</span>eye_color) <span class="sc">|&gt;</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), toupper))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 x 6
+   name               height  mass hair_color    skin_color  eye_color
+   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;    
+ 1 LUKE SKYWALKER        172    77 BLOND         FAIR        BLUE     
+ 2 C-3PO                 167    75 &lt;NA&gt;          GOLD        YELLOW   
+ 3 R2-D2                  96    32 &lt;NA&gt;          WHITE, BLUE RED      
+ 4 DARTH VADER           202   136 NONE          WHITE       YELLOW   
+ 5 LEIA ORGANA           150    49 BROWN         LIGHT       BROWN    
+ 6 OWEN LARS             178   120 BROWN, GREY   LIGHT       BLUE     
+ 7 BERU WHITESUN LARS    165    75 BROWN         LIGHT       BLUE     
+ 8 R5-D4                  97    32 &lt;NA&gt;          WHITE, RED  RED      
+ 9 BIGGS DARKLIGHTER     183    84 BLACK         LIGHT       BROWN    
+10 OBI-WAN KENOBI        182    77 AUBURN, WHITE FAIR        BLUE-GRAY
+# i 77 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-5-dplyrsummarize" class="level1">
+<h1>Exercise 5: dplyr::summarize</h1>
+<p><img src="images/summarize.png" class="img-fluid"> <img src="images/group_by.png" class="img-fluid"></p>
+<p>Particularly useful in combination with the <code>group_by</code> command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_height =</span> <span class="fu">mean</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 38 x 2
+   species   mean_height
+   &lt;chr&gt;           &lt;dbl&gt;
+ 1 Aleena            79 
+ 2 Besalisk         198 
+ 3 Cerean           198 
+ 4 Chagrian         196 
+ 5 Clawdite         168 
+ 6 Droid             NA 
+ 7 Dug              112 
+ 8 Ewok              88 
+ 9 Geonosian        183 
+10 Gungan           209.
+# i 28 more rows</code></pre>
+</div>
+</div>
+<p>Notice that some of these summarized values are missing. If we want to ignore missing values, use <code>na.rm = T</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Much better</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_height =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 38 x 2
+   species   mean_height
+   &lt;chr&gt;           &lt;dbl&gt;
+ 1 Aleena            79 
+ 2 Besalisk         198 
+ 3 Cerean           198 
+ 4 Chagrian         196 
+ 5 Clawdite         168 
+ 6 Droid            131.
+ 7 Dug              112 
+ 8 Ewok              88 
+ 9 Geonosian        183 
+10 Gungan           209.
+# i 28 more rows</code></pre>
+</div>
+</div>
+<p>The same <code>across</code>-based workflow that we saw with <code>mutate</code> a few slides back also works with <code>summarize</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 38 x 4
+   species   height  mass birth_year
+   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Aleena       79     15         NA
+ 2 Besalisk    198    102         NA
+ 3 Cerean      198     82         92
+ 4 Chagrian    196     NA         NA
+ 5 Clawdite    168     55         NA
+ 6 Droid        NA     NA         NA
+ 7 Dug         112     40         NA
+ 8 Ewok         88     20          8
+ 9 Geonosian   183     80         NA
+10 Gungan      209.    NA         NA
+# i 28 more rows</code></pre>
+</div>
+</div>
+<p>The same <code>across</code>-based workflow that we saw with <code>mutate</code> a few slides back also works with <code>summarize</code>. Though to add arguments, we have to use an <strong>anonymous function:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm=</span>T)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 38 x 4
+   species   height  mass birth_year
+   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Aleena       79   15        NaN  
+ 2 Besalisk    198  102        NaN  
+ 3 Cerean      198   82         92  
+ 4 Chagrian    196  NaN        NaN  
+ 5 Clawdite    168   55        NaN  
+ 6 Droid       131.  69.8       53.3
+ 7 Dug         112   40        NaN  
+ 8 Ewok         88   20          8  
+ 9 Geonosian   183   80        NaN  
+10 Gungan      209.  74         52  
+# i 28 more rows</code></pre>
+</div>
+</div>
+<hr>
+<section id="other-dplyr-goodies" class="level3">
+<h3 class="anchored" data-anchor-id="other-dplyr-goodies">Other dplyr goodies</h3>
+<p><code>ungroup</code>: For ungrouping after using <code>group_by</code>. - Use after doing your grouped <code>summarize</code> or <code>mutate</code> operation, or everything else you do will be super slow.</p>
+<p><code>slice</code>: Subset rows by position rather than filtering by values. - E.g. <code>starwars |&gt; slice(1:10)</code></p>
+<p><code>pull</code>: Extract a column from as a data frame as a vector or scalar. - E.g. <code>starwars |&gt; filter(sex=="female") |&gt; pull(height)</code></p>
+<p><code>distinct</code> and <code>count</code>: List unique values, with or without their number of appearances. - E.g. <code>starwars |&gt; distinct(species)</code>, or <code>starwars |&gt; count(species)</code> - <code>count</code> is equivalent to <code>group_by</code> and <code>summarize</code> with <code>n()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 38 x 2
+   species       n
+   &lt;chr&gt;     &lt;int&gt;
+ 1 Aleena        1
+ 2 Besalisk      1
+ 3 Cerean        1
+ 4 Chagrian      1
+ 5 Clawdite      1
+ 6 Droid         6
+ 7 Dug           1
+ 8 Ewok          1
+ 9 Geonosian     1
+10 Gungan        3
+# i 28 more rows</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="challenge-1" class="level1">
+<h1>Challenge 1</h1>
+<p><strong>List the most common eye colors among female Star Wars characters in descending order of frequency.</strong></p>
+<p>As usual, there are multiple solutions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"female"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(eye_color) <span class="sc">|&gt;</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  eye_color     n
+  &lt;chr&gt;     &lt;int&gt;
+1 blue          6
+2 brown         4
+3 black         2
+4 hazel         2
+5 unknown       1
+6 yellow        1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"female"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(eye_color) <span class="sc">|&gt;</span> </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  eye_color     n
+  &lt;chr&gt;     &lt;int&gt;
+1 blue          6
+2 brown         4
+3 black         2
+4 hazel         2
+5 unknown       1
+6 yellow        1</code></pre>
+</div>
+</div>
+<p>Explain what each line in the codes do:</p>
+<p><strong>Answer:</strong></p>
+<p>starwars |&gt; means we are pulling from the starwars dataset</p>
+<p>filter() keeps only rows where sex is equal to female</p>
+<p>count() counts the number of characters for each unique value in the eye_color column. It automatically creates a new column n with the counts.</p>
+<p>arrange(desc(n)) sorts results in descending order of n</p>
+<p>group_by() groups by eye color</p>
+<p>summarize() computes number of rows with n()</p>
+<section id="storing-results-in-memory" class="level3">
+<h3 class="anchored" data-anchor-id="storing-results-in-memory">Storing results in memory</h3>
+<p>So far we haven’t been saving the dataframes that result from our code in memory. Usually, we will want to use them for the next task. Create a new object each time you write a pipeline.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>women <span class="ot">=</span> starwars <span class="sc">|&gt;</span> <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"female"</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>brown_eyed_women <span class="ot">=</span> women <span class="sc">|&gt;</span> <span class="fu">filter</span>(eye_color <span class="sc">==</span> <span class="st">"brown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Resist the temptation to use the same object name. This is called <strong>clobbering</strong> since it overwrites the previous version. It ruins your ability to easily go back to previous steps.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DON'T do this</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>starwars <span class="ot">=</span> starwars <span class="sc">|&gt;</span> <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">"female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By keeping multiple copies of very similar dataframes, will you waste your computer’s memory? Usually, no – R is smart and stores only the changes between objects.</p>
+</section>
+<section id="key-tidyr-verbs" class="level3">
+<h3 class="anchored" data-anchor-id="key-tidyr-verbs">Key tidyr verbs</h3>
+<ol type="1">
+<li><p><code>pivot_longer</code>: Pivot wide data into long format.</p></li>
+<li><p><code>pivot_wider</code>: Pivot long data into wide format.</p></li>
+<li><p><code>separate</code>: Separate (i.e.&nbsp;split) one column into multiple columns.</p></li>
+<li><p><code>unite</code>: Unite (i.e.&nbsp;combine) multiple columns into one.</p></li>
+</ol>
+<p><br></p>
+<p>Which of <code>pivot_longer</code> vs <code>pivot_wider</code> produces “tidy” data?</p>
+</section>
+</section>
+<section id="exercise-6-tidyrpivot_longer" class="level1">
+<h1>Exercise 6: tidyr::pivot_longer</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>stocks <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="do">## Could use "tibble" instead of "data.frame" if you prefer</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">as.Date</span>(<span class="st">'2009-01-01'</span>) <span class="sc">+</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>,</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">1</span>),</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">2</span>),</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>stocks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        time         X        Y        Z
+1 2009-01-01 10.660600 10.49751 7.522628
+2 2009-01-02  8.242109 12.02031 7.400682</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>tidy_stocks <span class="ot">=</span> stocks <span class="sc">|&gt;</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>X<span class="sc">:</span>Z, <span class="at">names_to=</span><span class="st">"stock"</span>, <span class="at">values_to=</span><span class="st">"price"</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>tidy_stocks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 3
+  time       stock price
+  &lt;date&gt;     &lt;chr&gt; &lt;dbl&gt;
+1 2009-01-01 X     10.7 
+2 2009-01-01 Y     10.5 
+3 2009-01-01 Z      7.52
+4 2009-01-02 X      8.24
+5 2009-01-02 Y     12.0 
+6 2009-01-02 Z      7.40</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-7-tidyrpivot_wider" class="level1">
+<h1>Exercise 7: tidyr::pivot_wider</h1>
+<p>Now we can use pivot_wider to go back to the original dataframe:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>tidy_stocks <span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>stock, <span class="at">values_from=</span>price)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 x 4
+  time           X     Y     Z
+  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 2009-01-01 10.7   10.5  7.52
+2 2009-01-02  8.24  12.0  7.40</code></pre>
+</div>
+</div>
+<p>Or, we can put it into a new (“transposed”) format, in which the observations are stocks and the columns are dates:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>tidy_stocks <span class="sc">|&gt;</span> <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>time, <span class="at">values_from=</span>price)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 x 3
+  stock `2009-01-01` `2009-01-02`
+  &lt;chr&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+1 X            10.7          8.24
+2 Y            10.5         12.0 
+3 Z             7.52         7.40</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-8-tidyrseparate" class="level1">
+<h1>Exercise 8: tidyr::separate</h1>
+<p><code>separate</code> helps when you have more than one value in a single column:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>economists <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Adam_Smith"</span>, <span class="st">"Paul_Samuelson"</span>, <span class="st">"Milton_Friedman"</span>))</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>economists</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             name
+1      Adam_Smith
+2  Paul_Samuelson
+3 Milton_Friedman</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>economists <span class="sc">|&gt;</span> <span class="fu">separate</span>(name, <span class="fu">c</span>(<span class="st">"first_name"</span>, <span class="st">"last_name"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  first_name last_name
+1       Adam     Smith
+2       Paul Samuelson
+3     Milton  Friedman</code></pre>
+</div>
+</div>
+<p>–</p>
+<p>This command is pretty smart. But to avoid ambiguity, you can also specify the separation character with the <code>sep</code> argument:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>economists <span class="sc">|&gt;</span> <span class="fu">separate</span>(name, <span class="fu">c</span>(<span class="st">"first_name"</span>, <span class="st">"last_name"</span>), <span class="at">sep =</span> <span class="st">"_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  first_name last_name
+1       Adam     Smith
+2       Paul Samuelson
+3     Milton  Friedman</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-9-tidyrseparate" class="level1">
+<h1>Exercise 9: tidyr::separate</h1>
+<p>Related is <code>separate_rows</code>, for splitting cells with multiple values into multiple rows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>jobs <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Joe"</span>, <span class="st">"Jill"</span>),</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">occupation =</span> <span class="fu">c</span>(<span class="st">"President"</span>, <span class="st">"First Lady, Professor, Grandmother"</span>)</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>jobs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  name                         occupation
+1  Joe                          President
+2 Jill First Lady, Professor, Grandmother</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now split out Jill's various occupations into different rows</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>jobs <span class="sc">|&gt;</span> <span class="fu">separate_rows</span>(occupation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 x 2
+  name  occupation 
+  &lt;chr&gt; &lt;chr&gt;      
+1 Joe   President  
+2 Jill  First      
+3 Jill  Lady       
+4 Jill  Professor  
+5 Jill  Grandmother</code></pre>
+</div>
+</div>
+<p>Related is <code>separate_rows</code>, for splitting cells with multiple values into multiple rows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>jobs <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Joe"</span>, <span class="st">"Jill"</span>),</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">occupation =</span> <span class="fu">c</span>(<span class="st">"President"</span>, <span class="st">"First Lady, Professor, Grandmother"</span>)</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>jobs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  name                         occupation
+1  Joe                          President
+2 Jill First Lady, Professor, Grandmother</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now split out Jill's various occupations into different rows</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>jobs <span class="sc">|&gt;</span> <span class="fu">separate_rows</span>(occupation, <span class="at">sep =</span> <span class="st">", "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 x 2
+  name  occupation 
+  &lt;chr&gt; &lt;chr&gt;      
+1 Joe   President  
+2 Jill  First Lady 
+3 Jill  Professor  
+4 Jill  Grandmother</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-10-tidyrunite" class="level1">
+<h1>Exercise 10: tidyr::unite</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>gdp <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">yr =</span> <span class="fu">rep</span>(<span class="dv">2016</span>, <span class="at">times =</span> <span class="dv">4</span>),</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mnth =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="at">times =</span> <span class="dv">4</span>),</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dy =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gdp =</span> <span class="fu">rnorm</span>(<span class="dv">4</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>gdp </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    yr mnth dy       gdp
+1 2016    1  1  97.10958
+2 2016    1  2  99.25788
+3 2016    1  3  98.84579
+4 2016    1  4 104.39035</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Combine "yr", "mnth", and "dy" into one "date" column</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>gdp <span class="sc">|&gt;</span> <span class="fu">unite</span>(date, <span class="fu">c</span>(<span class="st">"yr"</span>, <span class="st">"mnth"</span>, <span class="st">"dy"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date       gdp
+1 2016-1-1  97.10958
+2 2016-1-2  99.25788
+3 2016-1-3  98.84579
+4 2016-1-4 104.39035</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>gdp_u <span class="ot">&lt;-</span> gdp <span class="sc">|&gt;</span> <span class="fu">unite</span>(date, <span class="fu">c</span>(<span class="st">"yr"</span>, <span class="st">"mnth"</span>, <span class="st">"dy"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that <code>unite</code> will automatically create a character variable.</p>
+<p>If you want to convert it to something else (e.g.&nbsp;date or numeric) then you will need to modify it using <code>mutate</code>. This example uses the <a href="https://lubridate.tidyverse.org/">lubridate</a> package’s super helpful date conversion functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>gdp_u <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">ymd</span>(date))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        date       gdp
+1 2016-01-01  97.10958
+2 2016-01-02  99.25788
+3 2016-01-03  98.84579
+4 2016-01-04 104.39035</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="challenge-2" class="level1">
+<h1>Challenge 2</h1>
+<p><strong>Using <code>nycflights13</code>, create a table of average arrival delay (in minutes) by day (in rows) and carrier (in columns).</strong></p>
+<p>Hint: Recall that you can tabulate summary statistics using <code>group_by</code> and <code>summarize</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span> </span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_late =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 x 2
+   carrier avg_late
+   &lt;chr&gt;      &lt;dbl&gt;
+ 1 9E         7.38 
+ 2 AA         0.364
+ 3 AS        -9.93 
+ 4 B6         9.46 
+ 5 DL         1.64 
+ 6 EV        15.8  
+ 7 F9        21.9  
+ 8 FL        20.1  
+ 9 HA        -6.92 
+10 MQ        10.8  
+11 OO        11.9  
+12 UA         3.56 
+13 US         2.13 
+14 VX         1.76 
+15 WN         9.65 
+16 YV        15.6  </code></pre>
+</div>
+</div>
+<p>Solution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>delay_long <span class="ot">=</span> flights <span class="sc">|&gt;</span> </span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier, day) <span class="sc">|&gt;</span> </span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_late =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm=</span>T))</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>delay_wide <span class="ot">=</span> delay_long <span class="sc">|&gt;</span> </span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>carrier, <span class="at">values_from=</span>avg_late)</span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(delay_wide, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 x 17
+    day  `9E`     AA     AS      B6     DL    EV    F9    FL    HA    MQ    OO
+  &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     1  7.21 -1.23   -5.96 11.9     0.866 21.3  21.7  22.7  -15.4 12.9   NA  
+2     2  7.35 -0.905 -13.7   9.90    3.05  18.0   7.71 20.9  -16.1  9.04 NaN  
+3     3  5.80 -3.09  -20.8   5.26   -0.204 15.3  18.0  19.6  -16.8 13.7    0.5
+4     4 -2.11 -5.80  -22.3  -0.0939 -6.24   3.87 14.5   4.38 -15.2  3.82 -12  
+# i 5 more variables: UA &lt;dbl&gt;, US &lt;dbl&gt;, VX &lt;dbl&gt;, WN &lt;dbl&gt;, YV &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Explain what each line in the codes do:</p>
+<p><strong>Answer:</strong></p>
+<p>delay_long stores the flights data from flights</p>
+<p>group_by() groups by both carrier and day</p>
+<p>summarize() finds average delay</p>
+<p>delay_long stores data from delay_long</p>
+<p>pivot_wider changes data to a wide format</p>
+<p>head() dsplays first 4 rows of delay_wide</p>
+</section>
+<section id="create-github-account" class="level1">
+<h1>Create GitHub Account</h1>
+<p>Go to github.com and sign up to create an account. Report your GitHub username via this form:</p>
+<p><a href="https://forms.office.com/r/w5HQepaeCe">GitHub SignUp Report Form</a></p>
+</section>
+<section id="submission" class="level1">
+<h1>Submission</h1>
+<p>You will submit the PDF documents in to Gradescope as part of your final submission.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember – you must turn in a PDF file to the Gradescope page before the submission deadline for full credit.</p>
+<p>Instructions to combine PDFs:</p>
+<ul>
+<li><p>Preview (Mac): <a href="https://support.apple.com/guide/preview/combine-pdfs-prvw43696/mac">support.apple.com/guide/preview/combine-pdfs-prvw43696/mac</a></p></li>
+<li><p>Adobe (Mac or PC): <a href="https://helpx.adobe.com/acrobat/using/merging-files-single-pdf.html">helpx.adobe.com/acrobat/using/merging-files-single-pdf.html</a></p></li>
+</ul>
+</div>
+</div>
+<p>To submit your assignment:</p>
+<ul>
+<li><p>Access Gradescope</p></li>
+<li><p>Click on the assignment, and you’ll be prompted to submit it.</p></li>
+<li><p>Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).</p></li>
+<li><p>Select the first page of your .PDF submission to be associated with the <em>“Workflow &amp; formatting”</em> section.</p></li>
+</ul>
+</section>
+<section id="grading" class="level1">
+<h1>Grading</h1>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Replicating Ex 1-10</td>
+<td style="text-align: left;">85</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Challenge</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Creating Github Account</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Workflow &amp; formatting</td>
+<td style="text-align: left;">5</td>
+</tr>
+</tbody>
+</table>
+<p>The “Workflow &amp; formatting” grade is to assess the reproducible workflow and document format.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
